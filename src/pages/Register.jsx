@@ -2,9 +2,24 @@ import React from 'react';
 import { Link } from 'react-router';
 
 const Register = () => {
+
+    const registerUser = e =>{
+        e.preventDefault();
+
+        const form = e.target;
+        const name = form.name.value;
+        const email = form.email.value;
+        const password = form.password.value;
+
+        const user = {name, email, password};
+        console.log(user);
+    }
+
+
+
     return (
         <div className="min-h-screen flex items-center justify-center bg-base-100 px-4">
-            <form className="w-full max-w-lg">
+            <form onSubmit={registerUser} className="w-full max-w-lg">
                 <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-6 shadow-md">
                     <legend className="fieldset-legend text-lg font-semibold text-center">
                         Registration
@@ -16,6 +31,7 @@ const Register = () => {
                         type="text"
                         className="input input-bordered w-full"
                         placeholder="Name"
+                        name='name'
                     />
 
                     {/* Email */}
@@ -24,6 +40,7 @@ const Register = () => {
                         type="email"
                         className="input input-bordered w-full"
                         placeholder="Email"
+                        name='email'
                     />
 
                     {/* Password */}
@@ -32,6 +49,7 @@ const Register = () => {
                         type="password"
                         className="input input-bordered w-full"
                         placeholder="Password"
+                        name='password'
                     />
 
                     {/* Register Button */}
