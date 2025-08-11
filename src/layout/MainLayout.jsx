@@ -1,15 +1,17 @@
-
 import React from 'react';
+import Navbar from '../components/Navbar';
+import { Outlet } from 'react-router';
 
 
 const MainLayout = () => {
-    return (
-        <div>
-            <h1 className='text-red-500'>Home</h1>
-            <button className="btn btn-soft btn-success">Success</button>
-           
-        </div>
-    );
+  return (
+    <div>
+      <Navbar />
+      <div className="p-4">
+        <Outlet></Outlet>
+      </div>
+    </div>
+  );
 };
 
 export default MainLayout;
