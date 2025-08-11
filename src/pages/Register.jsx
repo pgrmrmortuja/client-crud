@@ -1,9 +1,10 @@
-import React from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
+import Swal from 'sweetalert2';
 
 const Register = () => {
+    const navigate = useNavigate();
 
-    const registerUser = e =>{
+    const registerUser = e => {
         e.preventDefault();
 
         const form = e.target;
@@ -11,8 +12,34 @@ const Register = () => {
         const email = form.email.value;
         const password = form.password.value;
 
-        const user = {name, email, password};
+        const user = { name, email, password };
         console.log(user);
+
+        const storedUser = {name, email};
+
+        fetch("http://localhost:5000/register",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(user)
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+
+                if (data.insertedId) {
+                    Swal.fire("Registration Successful");
+
+                    localStorage.setItem("user", JSON.stringify(storedUser));
+
+                    navigate("/");
+
+                } else {
+                    Swal.fire("Email Already Exist.");
+                }
+            })
     }
 
 
