@@ -1,17 +1,60 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
-import { Outlet } from 'react-router';
-
+import { HiMenu, HiX } from 'react-icons/hi';
+import { Link, Outlet } from 'react-router';
 
 const MainLayout = () => {
-  return (
-    <div>
-      <Navbar />
-      <div className="p-4">
-        <Outlet></Outlet>
-      </div>
-    </div>
-  );
+    return (
+        <div>
+            <div className="drawer">
+                <input id="my-drawer" type="checkbox" className="drawer-toggle peer" />
+
+                {/* Top Navbar Area */}
+                <div className="drawer-content flex flex-col min-h-screen">
+                    <div className="flex items-center justify-between bg-base-200 p-3 shadow-md">
+                        {/* ✅ Hamburger Icon */}
+                        <label
+                            htmlFor="my-drawer"
+                            className="btn btn-ghost text-2xl"
+                        >
+                            <HiMenu />
+                        </label>
+                        <nav className='flex items-center justify-center gap-2'>
+                            <h1 className='text-2xl'>Website</h1>
+                        </nav>
+                    </div>
+
+                    {/* Page Content */}
+                    <div className="w-11/12 mx-auto">
+                        <Outlet />
+                    </div>
+
+                    {/* Footer */}
+                </div>
+
+                {/* Sidebar Drawer */}
+                <div className="drawer-side">
+                    <label
+                        htmlFor="my-drawer"
+                        aria-label="close sidebar"
+                        className="drawer-overlay"
+                    ></label>
+                    <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4 space-y-2">
+                        {/* ✅ Cross Icon */}
+                        <li className="flex justify-end ml-56">
+                            <label htmlFor="my-drawer" className="btn btn-ghost text-2xl">
+                                <HiX />
+                            </label>
+                        </li>
+
+                        {/* Sidebar Links */}
+                        <li><Link to="/">Home</Link></li>
+                        <li><Link to="/about">About</Link></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    );
 };
 
 export default MainLayout;
