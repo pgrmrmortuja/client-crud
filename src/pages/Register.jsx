@@ -1,21 +1,32 @@
+import { useContext } from 'react';
+import { AuthContext } from '../providers/AuthProvider';
 import { Link, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
 
 const Register = () => {
+    const { user, setUser } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const registerUser = e => {
         e.preventDefault();
+
+        if (user !== null) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Warning',
+                text: 'Please logout from previous account before registering a new one.'
+            });
+            return;
+        }
 
         const form = e.target;
         const name = form.name.value;
         const email = form.email.value;
         const password = form.password.value;
 
-        const user = { name, email, password };
-        console.log(user);
+        const userdata = { name, email, password };
+        console.log(userdata);
 
-        const storedUser = {name, email};
 
         fetch("http://localhost:5000/register",
             {
@@ -23,22 +34,35 @@ const Register = () => {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(user)
+                body: JSON.stringify(userdata)
             })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                console.log("registration data", data);
 
-                if (data.insertedId) {
+                if (data.result.insertedId) {
                     Swal.fire("Registration Successful");
 
-                    localStorage.setItem("user", JSON.stringify(storedUser));
+                    console.log("registration data with success", data)
+
+                    const newUser = {
+                        name: data.name,
+                        email: data.email
+                    }
+
+                    localStorage.setItem("userdata", JSON.stringify(newUser));
+
+                    setUser(newUser);
+
 
                     navigate("/");
 
                 } else {
                     Swal.fire("Email Already Exist.");
                 }
+            })
+            .catch((error) =>{
+                console.log(error);
             })
     }
 
