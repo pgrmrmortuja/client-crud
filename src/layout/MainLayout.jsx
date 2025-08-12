@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { HiMenu, HiX } from 'react-icons/hi';
 import { Link, Outlet } from 'react-router';
+import Logout from '../components/Logout';
+import { AuthContext } from '../providers/AuthProvider';
 
 const MainLayout = () => {
+    const { user } = useContext(AuthContext);
     return (
         <div>
             <div className="drawer">
@@ -18,8 +21,13 @@ const MainLayout = () => {
                         >
                             <HiMenu />
                         </label>
-                        <nav className='flex items-center justify-center gap-2'>
+                        <nav className='flex items-center justify-center gap-5'>
                             <h1 className='text-2xl'>Website</h1>
+                            {
+                                user ?
+                                    (<h1>{user.name}</h1>) :
+                                    (<h1>No User</h1>)
+                            }
                         </nav>
                     </div>
 
@@ -51,6 +59,8 @@ const MainLayout = () => {
                         <li><Link to="/users">All Users</Link></li>
                         <li><Link to="/register">Register</Link></li>
                         <li><Link to="/login">Login</Link></li>
+                        <li><Logout></Logout></li>
+
                     </ul>
                 </div>
             </div>
