@@ -40,7 +40,7 @@ const Login = () => {
                 console.log("login data", data);
 
                 if (data.safeUser) {
-                    Swal.fire("Login Successful");
+                    Swal.fire(`${data.message}`);
 
                     console.log("login data with success", data)
 
@@ -57,7 +57,7 @@ const Login = () => {
                     navigate("/");
 
                 } else {
-                    Swal.fire("User not found");
+                    Swal.fire(`${data.message}`);
                 }
             })
             .catch((error) => {
