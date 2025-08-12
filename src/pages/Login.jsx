@@ -4,7 +4,7 @@ import { AuthContext } from '../providers/AuthProvider';
 import { useContext } from 'react';
 
 const Login = () => {
-    const { user } = useContext(AuthContext);
+    const { user, setUser } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const loginUser = e => {
@@ -23,10 +23,9 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
 
-        const userdata = { email, password };
+        const userdata = {email, password };
         console.log(userdata);
 
-        const storedUser = { email };
 
         fetch("http://localhost:5000/login",
             {
@@ -38,20 +37,35 @@ const Login = () => {
             })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                console.log("login data", data);
 
-                if (data.insertedId) {
+                if (data.safeUser) {
                     Swal.fire("Login Successful");
 
-                    localStorage.setItem("userdata", JSON.stringify(storedUser));
+                    console.log("login data with success", data)
+
+                    const newUser = {
+                        name: data.safeUser.name,
+                        email: data.safeUser.email
+                    }
+
+                    localStorage.setItem("userdata", JSON.stringify(newUser));
+
+                    setUser(newUser);
+
 
                     navigate("/");
 
                 } else {
-                    Swal.fire("Email Already Exist.");
+                    Swal.fire("User not found");
                 }
             })
+            .catch((error) => {
+                console.log(error);
+            })
     }
+
+
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-base-100 px-4">
@@ -66,6 +80,7 @@ const Login = () => {
                     <input
                         type="email"
                         className="input input-bordered w-full"
+                        name='email'
                         placeholder="Email"
                     />
 
@@ -73,6 +88,7 @@ const Login = () => {
                     <label className="label mt-2">Password</label>
                     <input
                         type="password"
+                        name='password'
                         className="input input-bordered w-full"
                         placeholder="Password"
                     />
