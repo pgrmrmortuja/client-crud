@@ -6,6 +6,7 @@ import Login from "../pages/Login";
 import AllUsers from "../pages/AllUsers";
 import Details from "../pages/Details";
 import Update from "../pages/Update";
+import ResetPassword from "../pages/ResetPassword";
 
 
 export const router = createBrowserRouter([
@@ -19,6 +20,7 @@ export const router = createBrowserRouter([
             { path: "users", Component: AllUsers },
             { path: "details", Component: Details },
             { path: "update", Component: Update },
+            {path: "reset-password", Component: ResetPassword},
             
         ]
     },

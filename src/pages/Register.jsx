@@ -40,7 +40,7 @@ const Register = () => {
             .then(data => {
                 console.log("registration data", data);
 
-                if (data.result.insertedId) {
+                if (data.result && data.result.insertedId) {
                     Swal.fire("Registration Successful");
 
                     console.log("registration data with success", data)
@@ -51,18 +51,15 @@ const Register = () => {
                     }
 
                     localStorage.setItem("userdata", JSON.stringify(newUser));
-
                     setUser(newUser);
-
-
                     navigate("/");
 
                 } else {
-                    Swal.fire("Email Already Exist.");
+                    Swal.fire(`The email ${email} Already Exist. You can't Register`);
                 }
             })
             .catch((error) =>{
-                console.log(error);
+                console.log("registration error",error);
             })
     }
 

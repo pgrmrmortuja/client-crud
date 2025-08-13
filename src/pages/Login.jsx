@@ -99,7 +99,7 @@ const Login = () => {
                     <div className="divider">OR</div>
 
                     <p className='text-center'>Not Register? <Link className='text-red-500' to={"/register"}>Register</Link> </p>
-                    <u className='text-center'>Forgotten Password? <Link className='text-red-500' to={"/reset"}>Reset</Link> </u>
+                    <u className='text-center'>Forgotten Password? <Link className='text-red-500' to={"/reset-password"}>Reset</Link> </u>
 
                 </fieldset>
             </form>
